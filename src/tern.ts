@@ -54,9 +54,15 @@ export const tern = async () => {
   core.endGroup();
 
   const workingDirectory = getWorkingDirectory()
-  fs.writeFile("tern.log", myOuput, (err) => {
-    if (err) code.setFailed('Write tern.log failed');
-  } 
+  fs.writeFileSync("tern.log", myOuput, (err) => {
+    if (err) {
+      core.setFailed('Write tern.log failed');
+      throw new Error('Write ten.log failed');
+    }
+    core.debug(
+      `Ouput written to tern.log`
+    );
+  })
 
   core.startGroup('collection output');
   core.setOutput('output', myOutput);
