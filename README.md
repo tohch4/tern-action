@@ -50,9 +50,12 @@ jobs:
       - uses: philips-labs/tern-action@v0.1.0
         id: scan
         with:
-          image: 'alpine:latest'
-      - name: cat output
-        run: echo ${{ steps.scan.outputs.output }}
+          image: alpine:latest
+      - run: echo ${{ steps.scan.outputs.output }} > tern.log
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tern 
+          path: tern.log 
 ```
 
 #### Examples

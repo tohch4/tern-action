@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import { exec, ExecOptions } from '@actions/exec';
+import {writeFileSync} from 'fs';
 
 export const tern = async () => {
   const image = core.getInput('image', { required: true });
@@ -51,8 +52,15 @@ export const tern = async () => {
     }
   }
   core.endGroup();
-  
+
+  const workingDirectory = getWorkingDirectory()
+  fs.writeFile("tern.log", myOuput, (err) => {
+    if (err) code.setFailed('Write tern.log failed');
+  } 
+
   core.startGroup('collection output');
   core.setOutput('output', myOutput);
+  core.setOutput('file', "tern.log");
+
   core.endGroup();
 };
